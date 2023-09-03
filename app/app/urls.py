@@ -20,6 +20,8 @@ from drf_spectacular.views import (
     SpectacularSwaggerView
 )
 
+from core import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user/', include('user.urls')),
