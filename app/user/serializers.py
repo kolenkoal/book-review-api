@@ -4,8 +4,6 @@ User serializer
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from core import models
-
 
 class UserSerializer(serializers.ModelSerializer):
     """A serializer for the user object"""
