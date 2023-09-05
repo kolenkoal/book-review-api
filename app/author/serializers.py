@@ -1,5 +1,5 @@
 """
-Crating serializers for authors.
+Creating serializers for authors.
 """
 from rest_framework import serializers
 

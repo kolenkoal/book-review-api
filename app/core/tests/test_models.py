@@ -1,7 +1,7 @@
 """
 Tests for models.
 """
-from unittest import TestCase
+from django.test import TestCase
 
 from django.contrib.auth import get_user_model
 
@@ -31,3 +31,16 @@ class ModelTests(TestCase):
             str(author),
             author.first_name + ' ' + author.second_name
         )
+
+    def test_create_genre(self):
+        """Test creating a user."""
+        user = create_user(
+            email='user2@example.com',
+            password='testpass123'
+        )
+        genre = models.Genre.objects.create(
+            user=user,
+            name='Fantasy'
+        )
+
+        self.assertEqual(str(genre), genre.name)

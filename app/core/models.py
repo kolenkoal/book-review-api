@@ -54,3 +54,14 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.second_name}'
+
+
+class Genre(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

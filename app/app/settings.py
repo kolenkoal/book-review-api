@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'drf_spectacular',
     'author',
+    'genres'
 ]
 
 MIDDLEWARE = [
