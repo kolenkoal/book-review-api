@@ -1,7 +1,7 @@
 """
 Database models.
 """
-
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -40,3 +40,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Author(models.Model):
+    """A model for a book in the system."""
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    first_name = models.CharField(max_length=255)
+    second_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f'{self.first_name} {self.second_name}'
