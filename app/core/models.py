@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Author(models.Model):
-    """A model for a book in the system."""
+    """A model for n author in the system."""
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -57,6 +57,7 @@ class Author(models.Model):
 
 
 class Genre(models.Model):
+    """A model for a genre in the system."""
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -65,3 +66,13 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Book(models.Model):
+    """A model for a book in the system."""
+    title = models.CharField(max_length=256)
+    description = models.TextField(null=True, blank=True)
+    total_pages = models.IntegerField()
+    author = models.ManyToManyField(Author, on_delete=models.CASCADE)
+    published_date = models.DateField()
+    genres = models.ManyToManyField(Genre, on_delete=models.CASCADE)
