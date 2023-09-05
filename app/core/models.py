@@ -73,6 +73,6 @@ class Book(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
     total_pages = models.IntegerField()
-    author = models.ManyToManyField(Author, on_delete=models.CASCADE)
+    author = models.ManyToManyField(Author)
     published_date = models.DateField()
-    genres = models.ManyToManyField(Genre, on_delete=models.CASCADE)
+    genres = models.ManyToManyField(Genre)
