@@ -44,3 +44,32 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(genre), genre.name)
+
+    def test_create_book(self):
+        """Test creating a book."""
+        user = create_user(
+            email='user3@example.com',
+            password='testpass123'
+        )
+        book = models.Book.objects.create(
+            title='Harry Potter',
+            description='Magical book about magicians',
+            total_pages=345,
+            published_date='2021-03-23'
+        )
+
+        author = models.Author.objects.create(
+            user=user,
+            first_name='Ivan',
+            second_name='Minin'
+        )
+
+        genre = models.Genre.objects.create(
+            user=user,
+            name='Fantasy'
+        )
+
+        book.author.add(author)
+        book.genres.add(genre)
+
+        self.assertEqual(str(book), book.title)

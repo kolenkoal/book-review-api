@@ -76,3 +76,6 @@ class Book(models.Model):
     author = models.ManyToManyField(Author)
     published_date = models.DateField()
     genres = models.ManyToManyField(Genre)
+
+    def __str__(self):
+        return self.title
