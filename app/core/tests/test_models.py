@@ -52,6 +52,7 @@ class ModelTests(TestCase):
             password='testpass123'
         )
         book = models.Book.objects.create(
+            user=user,
             title='Harry Potter',
             description='Magical book about magicians',
             total_pages=345,

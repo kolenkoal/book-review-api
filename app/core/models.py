@@ -44,7 +44,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Author(models.Model):
     """A model for n author in the system."""
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
@@ -58,7 +58,7 @@ class Author(models.Model):
 
 class Genre(models.Model):
     """A model for a genre in the system."""
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
@@ -70,12 +70,16 @@ class Genre(models.Model):
 
 class Book(models.Model):
     """A model for a book in the system."""
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
     total_pages = models.IntegerField()
-    author = models.ManyToManyField(Author)
+    author = models.ManyToManyField('Author')
     published_date = models.DateField()
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField('Genre')
 
     def __str__(self):
         return self.title
