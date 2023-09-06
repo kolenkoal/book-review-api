@@ -15,4 +15,5 @@ urlpatterns = [
     path('authors/', include('author.urls')),
     path('genres/', include('genres.urls')),
     path('books/', include('book.urls')),
+    path('reviews/', include('review.urls')),
 ]

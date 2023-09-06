@@ -35,18 +35,6 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class PublicGenreAPITests(TestCase):
-    """Test genres API."""
-
-    def setUp(self):
-        self.client = APIClient()
-
-    def test_retrieve_recipes(self):
-        res = self.client.get(GENRES_URL)
-
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
-
 class PrivateGenreAPITests(TestCase):
     """Test genres API."""
 

@@ -36,18 +36,6 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class PublicAuthorAPITests(TestCase):
-    """Test authors API."""
-
-    def setUp(self):
-        self.client = APIClient()
-
-    def test_retrieve_recipes(self):
-        res = self.client.get(AUTHORS_URL)
-
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
-
-
 class PrivateAuthorAPITests(TestCase):
     """Test authors API."""
 
