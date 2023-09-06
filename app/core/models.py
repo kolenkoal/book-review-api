@@ -2,6 +2,7 @@
 Database models.
 """
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -76,9 +77,12 @@ class Book(models.Model):
     )
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    total_pages = models.IntegerField()
+    total_pages = models.IntegerField(validators=[
+        MinValueValidator(1),
+        MaxValueValidator(10000)
+    ])
     author = models.ManyToManyField('Author')
-    published_date = models.DateField()
+    published_date = models.DateField(auto_now_add=True)
     genres = models.ManyToManyField('Genre')
 
     def __str__(self):
