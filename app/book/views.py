@@ -36,6 +36,8 @@ class BookViewSet(ModelViewSet):
             author_ids = self._params_to_ints(authors)
             queryset = queryset.filter(author__id__in=author_ids)
 
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-id').distinct()
+        if self.request.user.is_authenticated:
+            return queryset.filter(
+                user=self.request.user
+            ).order_by('-id').distinct()
+        return queryset.all().order_by('-id').distinct()
