@@ -12,7 +12,7 @@ from core.models import Author
 class AuthorViewSet(ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     authentication_classes = [TokenAuthentication]
 
     def perform_create(self, serializer):

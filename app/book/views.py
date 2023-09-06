@@ -2,7 +2,7 @@
 Defining views for genres.
 """
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
 
 from core.models import Book
@@ -13,7 +13,7 @@ class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         """Create a new book."""
