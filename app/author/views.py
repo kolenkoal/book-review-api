@@ -7,12 +7,13 @@ from rest_framework.viewsets import ModelViewSet
 
 from author.serializers import AuthorSerializer
 from core.models import Author
+from core.permissions import IsObjectOwner
 
 
 class AuthorViewSet(ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsObjectOwner]
     authentication_classes = [TokenAuthentication]
 
     def perform_create(self, serializer):

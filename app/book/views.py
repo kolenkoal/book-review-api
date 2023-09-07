@@ -7,13 +7,14 @@ from rest_framework.viewsets import ModelViewSet
 
 from core.models import Book
 from book.serializers import BookSerializer
+from core.permissions import IsObjectOwner
 
 
 class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
     authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsObjectOwner]
 
     def perform_create(self, serializer):
         """Create a new book."""

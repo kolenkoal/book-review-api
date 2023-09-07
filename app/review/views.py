@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from core.models import Review
+from core.permissions import IsObjectOwner
 from review.serializers import ReviewSerializer
 
 
@@ -13,7 +14,7 @@ class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsObjectOwner]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
