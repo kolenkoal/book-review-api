@@ -17,7 +17,7 @@ A Book Review API built using Django Rest Framework.
 
 ## ER Diagram
 
-![ER-Diagram](ER-Diagram.png)
+![ER-Diagram](media/images/ER-Diagram.png)
 
 ## Getting Started
 
