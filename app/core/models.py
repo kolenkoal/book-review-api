@@ -2,13 +2,13 @@
 Database models.
 """
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
-    PermissionsMixin
+    PermissionsMixin,
 )
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class UserManager(BaseUserManager):
@@ -33,6 +33,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """User in the system."""
+
     email = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
@@ -40,11 +41,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
 
 
 class Author(models.Model):
     """A model for n author in the system."""
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -54,11 +56,12 @@ class Author(models.Model):
     second_name = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'{self.first_name} {self.second_name}'
+        return f"{self.first_name} {self.second_name}"
 
 
 class Genre(models.Model):
     """A model for a genre in the system."""
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -71,19 +74,19 @@ class Genre(models.Model):
 
 class Book(models.Model):
     """A model for a book in the system."""
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
     title = models.CharField(max_length=256)
     description = models.TextField(null=True, blank=True)
-    total_pages = models.IntegerField(validators=[
-        MinValueValidator(1),
-        MaxValueValidator(10000)
-    ])
-    author = models.ManyToManyField('Author')
+    total_pages = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10000)]
+    )
+    author = models.ManyToManyField("Author")
     published_date = models.DateField(auto_now_add=True)
-    genres = models.ManyToManyField('Genre')
+    genres = models.ManyToManyField("Genre")
 
     def __str__(self):
         return self.title
@@ -91,20 +94,19 @@ class Book(models.Model):
 
 class Review(models.Model):
     RATING_CHOICES = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
-        (6, '6'),
-        (7, '7'),
-        (8, '8'),
-        (9, '9'),
-        (10, '10'),
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7"),
+        (8, "8"),
+        (9, "9"),
+        (10, "10"),
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
     review = models.TextField()
     rating = models.IntegerField(choices=RATING_CHOICES)

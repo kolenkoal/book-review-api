@@ -1,16 +1,10 @@
-from django.urls import (
-    path,
-    include
-)
-
+from author import views
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from author import views
 
 router = DefaultRouter()
-router.register('', views.AuthorViewSet, basename='authors')
-app_name = 'authors'
+router.register("", views.AuthorViewSet, basename="authors")
+app_name = "authors"
 
-urlpatterns = [
-    path('', include(router.urls))
-]
+urlpatterns = [path("", include(router.urls))]

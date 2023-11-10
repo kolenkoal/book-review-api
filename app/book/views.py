@@ -1,13 +1,12 @@
 """
 Defining views for genres.
 """
-from rest_framework.authentication import TokenAuthentication
-from rest_framework import permissions
-from rest_framework.viewsets import ModelViewSet
-
-from core.models import Book
 from book.serializers import BookSerializer
+from core.models import Book
 from core.permissions import IsObjectOwner
+from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.viewsets import ModelViewSet
 
 
 class BookViewSet(ModelViewSet):
@@ -22,12 +21,12 @@ class BookViewSet(ModelViewSet):
 
     def _params_to_ints(self, qs):
         """Convert a list of strings to integers."""
-        return [int(str_id) for str_id in qs.split(',')]
+        return [int(str_id) for str_id in qs.split(",")]
 
     def get_queryset(self):
         """Retrieve genres for authenticated user."""
-        genres = self.request.query_params.get('genres')
-        authors = self.request.query_params.get('author')
+        genres = self.request.query_params.get("genres")
+        authors = self.request.query_params.get("author")
         queryset = self.queryset
         if genres:
             genre_ids = self._params_to_ints(genres)
@@ -38,7 +37,9 @@ class BookViewSet(ModelViewSet):
             queryset = queryset.filter(author__id__in=author_ids)
 
         if self.request.user.is_authenticated:
-            return queryset.filter(
-                user=self.request.user
-            ).order_by('-id').distinct()
-        return queryset.all().order_by('-id').distinct()
+            return (
+                queryset.filter(user=self.request.user)
+                .order_by("-id")
+                .distinct()
+            )
+        return queryset.all().order_by("-id").distinct()

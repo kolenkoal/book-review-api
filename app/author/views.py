@@ -1,13 +1,12 @@
 """
 Creating views for authors.
 """
-from rest_framework import permissions
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
-
 from author.serializers import AuthorSerializer
 from core.models import Author
 from core.permissions import IsObjectOwner
+from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.viewsets import ModelViewSet
 
 
 class AuthorViewSet(ModelViewSet):

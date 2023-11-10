@@ -1,28 +1,24 @@
 """
 Tests for genre model.
 """
-from django.test import TestCase
-
+from core.models import Genre
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import reverse
+from genres.serializers import GenreSerializer
 from rest_framework import status
-
 from rest_framework.test import APIClient
 
-from core.models import Genre
-from genres.serializers import GenreSerializer
 
-GENRES_URL = reverse('genre:genre-list')
+GENRES_URL = reverse("genre:genre-list")
 
 
 def detail_url(genre_id):
-    return reverse('genre:genre-detail', args=[genre_id])
+    return reverse("genre:genre-detail", args=[genre_id])
 
 
 def create_genre(user, **params):
-    defaults = {
-        'name': 'Romance'
-    }
+    defaults = {"name": "Romance"}
 
     defaults.update(params)
 
@@ -41,8 +37,7 @@ class PrivateGenreAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = create_user(
-            email='alex5@exa.com',
-            password='testpassword123'
+            email="alex5@exa.com", password="testpassword123"
         )
         self.client.force_authenticate(self.user)
 
@@ -51,7 +46,7 @@ class PrivateGenreAPITests(TestCase):
 
         res = self.client.get(GENRES_URL)
 
-        genres = Genre.objects.all().order_by('-id')
+        genres = Genre.objects.all().order_by("-id")
         serializer = GenreSerializer(genres, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -60,18 +55,18 @@ class PrivateGenreAPITests(TestCase):
     def test_update_genre(self):
         """Test updating a genre."""
         genre = Genre.objects.create(user=self.user, name="Horrific")
-        payload = {'name': 'Reality'}
+        payload = {"name": "Reality"}
 
         url = detail_url(genre.id)
         res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         genre.refresh_from_db()
-        self.assertEqual(genre.name, payload['name'])
+        self.assertEqual(genre.name, payload["name"])
 
     def test_delete_genre(self):
         """Test deleting a genre."""
-        genre = Genre.objects.create(user=self.user, name='Historical')
+        genre = Genre.objects.create(user=self.user, name="Historical")
 
         url = detail_url(genre.id)
         res = self.client.delete(url)

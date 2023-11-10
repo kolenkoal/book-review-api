@@ -1,13 +1,12 @@
 """
 Defining views for genres.
 """
-from rest_framework.authentication import TokenAuthentication
-from rest_framework import permissions
-from rest_framework.viewsets import ModelViewSet
-
 from core.models import Genre
-from genres.serializers import GenreSerializer
 from core.permissions import IsObjectOwner
+from genres.serializers import GenreSerializer
+from rest_framework import permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.viewsets import ModelViewSet
 
 
 class GenreViewSet(ModelViewSet):

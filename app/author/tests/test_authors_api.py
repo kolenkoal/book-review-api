@@ -1,28 +1,26 @@
 """
 Tests for author model.
 """
-from django.test import TestCase
-
-from django.contrib.auth import get_user_model
-from django.urls import reverse
-from rest_framework import status
-
-from rest_framework.test import APIClient
-
 from author.serializers import AuthorSerializer
 from core.models import Author
+from django.contrib.auth import get_user_model
+from django.test import TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
 
-AUTHORS_URL = reverse('authors:authors-list')
+
+AUTHORS_URL = reverse("authors:authors-list")
 
 
 def detail_url(author_id):
-    return reverse('authors:authors-detail', args=[author_id])
+    return reverse("authors:authors-detail", args=[author_id])
 
 
 def create_author(user, **params):
     defaults = {
-        'first_name': 'Mikhail',
-        'second_name': 'Loshak',
+        "first_name": "Mikhail",
+        "second_name": "Loshak",
     }
 
     defaults.update(params)
@@ -42,8 +40,7 @@ class PrivateAuthorAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = create_user(
-            email='user@example.com',
-            password='testpass123'
+            email="user@example.com", password="testpass123"
         )
         self.client.force_authenticate(self.user)
 
@@ -52,7 +49,7 @@ class PrivateAuthorAPITests(TestCase):
 
         res = self.client.get(AUTHORS_URL)
 
-        authors = Author.objects.all().order_by('-id')
+        authors = Author.objects.all().order_by("-id")
         serializer = AuthorSerializer(authors, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -62,24 +59,24 @@ class PrivateAuthorAPITests(TestCase):
         """Test updating an author."""
         author = Author.objects.create(
             user=self.user,
-            first_name='Antony',
-            second_name='Kireev',
+            first_name="Antony",
+            second_name="Kireev",
         )
-        payload = {'first_name': 'Alexander'}
+        payload = {"first_name": "Alexander"}
 
         url = detail_url(author.id)
         res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         author.refresh_from_db()
-        self.assertEqual(author.first_name, payload['first_name'])
+        self.assertEqual(author.first_name, payload["first_name"])
 
     def test_delete_authors(self):
         """Test deleting a genre."""
         author = Author.objects.create(
             user=self.user,
-            first_name='Igor',
-            second_name='Venskiy',
+            first_name="Igor",
+            second_name="Venskiy",
         )
 
         url = detail_url(author.id)

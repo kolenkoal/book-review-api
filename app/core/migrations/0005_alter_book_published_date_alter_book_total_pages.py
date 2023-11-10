@@ -5,20 +5,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('core', '0004_alter_author_user_alter_book_user_alter_genre_user'),
+        ("core", "0004_alter_author_user_alter_book_user_alter_genre_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='book',
-            name='published_date',
+            model_name="book",
+            name="published_date",
             field=models.DateField(auto_now_add=True),
         ),
         migrations.AlterField(
-            model_name='book',
-            name='total_pages',
-            field=models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(10000)]),
+            model_name="book",
+            name="total_pages",
+            field=models.IntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(10000),
+                ]
+            ),
         ),
     ]

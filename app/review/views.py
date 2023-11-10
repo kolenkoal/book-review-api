@@ -1,12 +1,11 @@
 """
 Creating views for the review model.
 """
+from core.models import Review
+from core.permissions import IsObjectOwner
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
-
-from core.models import Review
-from core.permissions import IsObjectOwner
 from review.serializers import ReviewSerializer
 
 
